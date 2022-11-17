@@ -1,3 +1,4 @@
+package ProjetoTelefonia;
 import java.util.Calendar;
 import java.util.Objects;
 import java.util.ArrayList;
@@ -53,6 +54,7 @@ public class Chamada {
 		 Date d = ca.getTime();
 		 Chamada c = new Chamada(d, 50);
 		 Chamada c2 = new Chamada(d, 30);
+		 Assinante a1 = new Assinante(997877240, 41394876823L, "Iris");
 		 
 		 List<Chamada> chamadas = new ArrayList<>();
 		 chamadas.add(c2);
@@ -66,5 +68,7 @@ public class Chamada {
 		 System.out.println(cm);
 		 System.out.println();
 		 System.out.println();
+		 System.out.println(a1.toString());
+		 System.out.println(a1.getCpf());
 	 }
 }
