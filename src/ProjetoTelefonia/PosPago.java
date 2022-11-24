@@ -59,7 +59,7 @@ public class PosPago extends Assinante{
 		
 		p.fazerChamada(d,10);
 		c.fazerChamada(d,10);
-		c.fazerChamada(du,30);
+		c.fazerChamada(d,30);
 		
 		
 		//p.imprimirFatura(02);

@@ -1,5 +1,6 @@
 package ProjetoTelefonia;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -42,16 +43,26 @@ public class PrePago extends Assinante{
 	
 	@SuppressWarnings("deprecation")
 	public void imprimirFatura(int mes) {
+		DecimalFormat formatador = new DecimalFormat("0.00");
+		float valor = 0;
+		float somaValor = 0;
+		float rec = 0;
 		for (int i = 0; i < numChamadas; i++) {
 			if (this.chamadas[i].getData().getMonth() == mes) {
+				valor = this.chamadas[i].getDuracao() * 1.45f;
+				somaValor = valor + somaValor;
+				rec = this.recargas[i].getValor() + rec;
 				System.out.println(this.toString() + this.chamadas[i]);
+				System.out.println("Valor da ligação: R$" + formatador.format(valor));
 			}
 		}
+		System.out.println("Valor total das ligações: R$" + formatador.format(somaValor));
 		for (int i = 0; i < numRecargas; i++) {
 			if (this.recargas[i].getData().getMonth() == mes) {
 				System.out.println(this.recargas[i]);
 			}
 		}
+		System.out.println("Valor total de recargas: R$" + formatador.format(rec));
 	}
 	
 	public static void main(String[] args) {
@@ -67,8 +78,10 @@ public class PrePago extends Assinante{
 		Date du = cu.getTime(); 
 		
 		p.recarregar(d, 100);
+		p.recarregar(du, 150);
 		
-		p.fazerChamada(d,10);
+		p.fazerChamada(du,10);
+		p.fazerChamada(d,20);
 		
 		
 		
