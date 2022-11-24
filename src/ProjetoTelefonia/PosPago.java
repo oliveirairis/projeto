@@ -1,47 +1,52 @@
 package ProjetoTelefonia;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class PosPago extends Assinante{
 	private float assinatura;
-	private int contChamadas;
 
-	public PosPago(int numero, long cpf, String nome, float assinatura) {
+	public PosPago(int numero, long cpf, String nome, float assinatursa) {
 		super(numero, cpf, nome);
 		this.assinatura = assinatura;
-		this.contChamadas = 0;
 	}
 	
 	public void fazerChamada(Date data, int duracao) {
-		this.assinatura =  duracao * 1.04f; 
+		float valor =  duracao * 1.04f; 
 		
-		if (chamadas.length > 0) {
-		this.chamadas[this.numChamadas - 1] = new Chamada(data, duracao);
-		this.numChamadas = this.numChamadas - 1;
-		this.contChamadas += 1;
-		
-		//System.out.println(this.numChamadas);
+		for(int i = 0; i < this.chamadas.length; i++) {
+			if (this.chamadas[i] == null) {
+				Chamada chamada = new Chamada(data, duracao);
+				this.chamadas[i] = chamada;
+			}
 		}
 	}
 	
-	public void imprimirFatura() {
+	public void imprimirFatura(int mes) {
 		//System.out.println(this.chamadas[0].toString());
-		System.out.println(contChamadas);
-		for(int i =0; i <= contChamadas; i ++) {
+		for(int i =0; i < this.chamadas.length; i ++) {
+			if(this.chamadas[i].getData().getMonth() == mes) {
 			System.out.println("Data: " + this.chamadas[i].getData());
 			System.out.println("Duração: " +this.chamadas[i].getDuracao());
+			System.out.println(this.chamadas[i]);
+			}
 		}
 	}
 	
 	
 	public static void main(String[] args) {
-		PosPago p = new PosPago(3, 41394876823L, "Iris", 10f);
+		PosPago p = new PosPago(3, 41394876823L, "Iris", 1f);
 		
-		p.fazerChamada(new Date(),10);
+		Calendar ca = Calendar.getInstance();
+		ca.set(2022,02,18);
+		Date d = ca.getTime();
+		 
+		p.fazerChamada(d,10);
 		p.fazerChamada(new Date(),100);
 		
-		p.imprimirFatura();
-		System.out.println(p.toString());
+		
+		p.imprimirFatura(02);
+		//System.out.println(p.toString());
 		
 	}
 	
