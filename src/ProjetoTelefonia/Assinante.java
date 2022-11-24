@@ -8,8 +8,7 @@ public class Assinante {
 	private int numero;
 	
 	public Assinante(int numero, long cpf, String nome) {
-		this.chamadas = new Chamada[numChamadas];
-		//this.numChamadas = numero;
+		this.chamadas = new Chamada[100];
 		this.cpf = cpf;
 		this.nome = nome;
 		this.numero = numero;
