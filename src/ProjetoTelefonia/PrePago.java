@@ -25,7 +25,7 @@ public class PrePago extends Assinante{
 				this.creditos = this.creditos - semCredito;
 			}
 			else {
-				System.out.println("Você não possui créditos suficientes para realizar essa chamada.");
+				System.out.println("Você não possui créditos para realizar essa chamada.");
 			}
 		}
 	}
@@ -37,6 +37,8 @@ public class PrePago extends Assinante{
 				Recarga rec = new Recarga(data, valor);
 				this.recargas[i] = rec;
 				this.creditos = this.creditos + valor;
+				//tirar depois
+				System.out.println(this.creditos);
 			}
 		}
 	}
@@ -67,6 +69,7 @@ public class PrePago extends Assinante{
 	
 	public static void main(String[] args) {
 		PrePago p = new PrePago(41394876823L, "Iris", 997877240);
+		
 		
 		
 		Calendar ca = Calendar.getInstance();

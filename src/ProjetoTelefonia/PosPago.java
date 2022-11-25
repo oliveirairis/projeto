@@ -44,7 +44,6 @@ public class PosPago extends Assinante{
 		System.out.println("Valor da fatura: R$" + formatador.format(fatura));
 	}
 	
-	
 	public static void main(String[] args) {
 		PosPago p = new PosPago(3, 41394876823L, "Iris", 10);
 		PosPago c = new PosPago(3, 41394876823L, "Juliana", 20);
