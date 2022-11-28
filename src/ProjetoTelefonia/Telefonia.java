@@ -1,15 +1,14 @@
 package ProjetoTelefonia;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
+import java.text.DecimalFormat;
 
 public class Telefonia {
 	private PrePago[] prepagos;
 	private int numPrePagos;
 	private PosPago[] pospagos;
 	private int numPosPagos;
-	PrePago creditos;
 
 	public Telefonia() {
 		super();
@@ -21,10 +20,10 @@ public class Telefonia {
 		if(opcao == 1) {
 			this.numPosPagos++;
 			for (int i = 0; i < numPosPagos; i++) {
-				if (this.pospagos[i] == null) {
+				if(this.pospagos[i] == null) {
 					PosPago posp = new PosPago(numero, cpf, nome, assinatura);
 					this.pospagos[i] = posp;
-				} 
+				}
 			}
 			
 		} else if (opcao == 2) {
@@ -39,21 +38,23 @@ public class Telefonia {
 	}
 	
 	public void listarAssinantes() {
+		System.out.println("Assinantes pré pagos: ");
 		for (int i = 0; i < numPrePagos; i++) {
 			if (this.prepagos[i] != null){
 			System.out.println(this.prepagos[i].toString());
 			}
 		}
 		System.out.println();
+		System.out.println("Assinantes pós pagos: ");
 		for (int i = 0; i < numPosPagos; i++) {
 			if(this.pospagos[i] != null) {
 			System.out.println(this.pospagos[i].toString());
 			}
 		}
+		System.out.println();
 	}
 	
 	public void fazerChamada(int opcao, long cpf, Date data, int duracao) {
-		System.out.println(opcao);
 		if (opcao == 1) { 
 			if (this.localizarPosPago(cpf) != null) {
 				PosPago cham = this.localizarPosPago(cpf);
@@ -63,14 +64,11 @@ public class Telefonia {
 				System.out.println("O assinante não foi encontrado no sistema.");
 			}
 		} else if (opcao == 2) {
-			if (this.localizarPrePago(cpf) != null && creditos != null) {
+			if (this.localizarPrePago(cpf) != null) {
 				PrePago cham = this.localizarPrePago(cpf);
 				cham.fazerChamada(data, duracao);
-				System.out.println("A chamada foi realizada.");
-			} else if(this.localizarPrePago(cpf) == null){
-				System.out.println("O assinante não foi encontrado no sistema."); 
 			} else {
-				System.out.println("Você não possui crédito para realizar essa chamada.");
+				System.out.println("O assinante não foi encontrado no sistema.");
 			}
 		} else {
 			System.out.println("Escolha outra opção.");
@@ -91,11 +89,9 @@ public class Telefonia {
 		for (int i = 0; i < numPrePagos; i++) {
 			if (this.prepagos[i] != null) {
 				if (this.prepagos[i].getCpf() == cpf) {
-					//System.out.println("estou no localizar prepago");
 					return this.prepagos[i];
 			}
 			} else {
-				System.out.println("to aqui");
 				return null;
 			}
 		}
@@ -103,51 +99,70 @@ public class Telefonia {
 	}
 
 	public PosPago localizarPosPago(long cpf) {
-		for (int i = 0; i < numPosPagos; i++) {
+		for (int i = 0; i <= numPosPagos; i++) {
+			if (this.pospagos[i] != null) {
 			if (this.pospagos[i].getCpf() == cpf) {
 				return this.pospagos[i];
-			} else {
-				return null;
+			} 
+			}
+			else {
+				i++;
 			}
 		}
 		return null;
 	}
 	
 	public void imprimirFaturas(int mes) {
+		DecimalFormat formatador = new DecimalFormat("0.00");
 		for (int i = 0; i < numPrePagos; i++) {
-			if (this.prepagos[i] != null){
-				//mudar isso
-			long cpf =	this.prepagos[i].getCpf();
-			PrePago prep = new PrePago(cpf, "Iris", 123);
-			prep.imprimirFatura(mes);
+			if (this.prepagos[i].numChamadas > 0) {
+			this.prepagos[i].imprimirFatura(mes);
+			} else {
+				System.out.println("Fatura assinante pré pago:");
+				System.out.println(this.prepagos[i]);
+				System.out.println("O assinante não efetuou ligações nesse mês.");
+				System.out.println("Créditos: R$" + formatador.format(this.prepagos[i].creditos));
 			}
+			System.out.println();
 		}
-		System.out.println();
 		for (int i = 0; i < numPosPagos; i++) {
-			if(this.pospagos[i] != null) {
-				//mudar isso
-				PosPago posp = new PosPago(321, 321, "Julia", 10);
-				posp.imprimirFatura(mes);
+			if(this.pospagos[i].numChamadas > 0) {
+			this.pospagos[i].imprimirFatura(mes);
 			}
+			else {
+				System.out.println("Fatura assinante pós pago:");
+				System.out.println(this.pospagos[i]);
+				System.out.println("O assinante não efetuou ligações nesse mês.");
+				System.out.println("Assinatura: R$" + formatador.format(this.pospagos[i].assinatura));
+				System.out.println("Valor da fatura: R$" + formatador.format(this.pospagos[i].assinatura));
+			}
+			System.out.println();
 		}
 	}
 	
 	public static void main(String[] args) {
 		Telefonia t = new Telefonia();
+		//Telefonia c = new Telefonia();
+		
+		//c.cadastrarAssinante(2, "Iris", 123, 123, 0);
 		
 		
-		Calendar ca = Calendar.getInstance();
-		ca.set(2022,02,18);
+		//Calendar ca = Calendar.getInstance();
+		//ca.set(2022,02,18);
 		Date d = new Date();
+		//System.out.println(d);
 		 
-		Calendar cu = Calendar.getInstance();
-		cu.set(2022,12,18);
-		Date du = cu.getTime(); 
+		//Calendar cu = Calendar.getInstance();
+		//cu.set(2022,12,18);
+		//Date du = cu.getTime(); 
+		//System.out.println(du);
+		//c.fazerChamada(2, 123, du, 10);
+		//c.listarAssinantes();
+		//c.imprimirFaturas(10);
 		
 		@SuppressWarnings("resource")
 		Scanner s = new Scanner(System.in);
 		int op = 0;
-		int x = 0;
 		String nome = "";
 		long cpf = 0;
 		int numero = 0;
@@ -156,7 +171,6 @@ public class Telefonia {
 		float assinatura = 0;
 		float rec = 0;
 		int mes = 0;
-		Chamada[] chamada = new Chamada[10];
 		while (op != 6) {
 			System.out.println("Digite uma opção: ");
 			System.out.println("1 - Cadastrar assinante");
@@ -222,7 +236,8 @@ public class Telefonia {
 				//Imprimir faturas
 				System.out.println("Digite o mês em que deseja visualizar as faturas: ");
 				mes = s.nextInt();
-				t.imprimirFaturas(mes);
+				int mesFatura = mes - 1;
+				t.imprimirFaturas(mesFatura);
 			}
 		}
 		
