@@ -1,11 +1,9 @@
 package ProjetoTelefonia;
-
-import java.util.Calendar;
 import java.util.Date;
 import java.text.DecimalFormat;
 
 public class PosPago extends Assinante{
-	private float assinatura;
+	protected float assinatura;
 	
 
 	public PosPago(int numero, long cpf, String nome, float assinatura) {
@@ -17,10 +15,8 @@ public class PosPago extends Assinante{
 		numChamadas++;
 		
 		for(int i = 0; i < numChamadas; i++) {
-			if (this.chamadas[i] == null) {
 				Chamada chamada = new Chamada(data, duracao);
 				this.chamadas[i] = chamada;
-			}	
 		}
 	}
 	
@@ -30,7 +26,9 @@ public class PosPago extends Assinante{
 		float valor = 0;
 		float somaValor = 0;
 		float fatura = 0;
+		System.out.println("Fatura assinante pós pago:");
 		for(int i = 0; i < numChamadas; i ++) {
+			if(this.chamadas[i] != null) {
 			if(this.chamadas[i].getData().getMonth() == mes) {
 				valor = this.chamadas[i].getDuracao() * 1.04f;
 				somaValor = valor + somaValor;
@@ -39,33 +37,10 @@ public class PosPago extends Assinante{
 				System.out.println(this.chamadas[i]);
 			}
 			fatura = somaValor + assinatura;
+			}
 		}
 		System.out.println("Assinatura: R$" + formatador.format(this.assinatura));
 		System.out.println("Valor da fatura: R$" + formatador.format(fatura));
+		System.out.println();
 	}
-	
-	public static void main(String[] args) {
-		PosPago p = new PosPago(3, 41394876823L, "Iris", 10);
-		PosPago c = new PosPago(3, 41394876823L, "Juliana", 20);
-		
-		Calendar ca = Calendar.getInstance();
-		ca.set(2022,02,18);
-		Date d = ca.getTime();
-		 
-		Calendar cu = Calendar.getInstance();
-		cu.set(2022,12,18);
-		Date du = cu.getTime(); 
-		
-		p.fazerChamada(d,10);
-		c.fazerChamada(d,10);
-		c.fazerChamada(d,30);
-		
-		
-		//p.imprimirFatura(02);
-		c.imprimirFatura(02);
-		p.imprimirFatura(02);
-		//System.out.println(p.toString());
-		
-	}
-	
 }

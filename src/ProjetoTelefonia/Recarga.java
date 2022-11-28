@@ -1,7 +1,5 @@
 package ProjetoTelefonia;
 
-import java.util.Calendar;
-
 import java.util.Date;
 
 public class Recarga {
@@ -24,15 +22,6 @@ public class Recarga {
 	@Override
 	public String toString() {
 		return "Recarga [data=" + data + ", valor=" + valor + " reais]";
-	}
-	
-	public static void main(String[] args) {
-		Calendar ca = Calendar.getInstance();
-		 //ca.set(2022,03,18);
-		 Date d = ca.getTime();
-		 
-		 Recarga r = new Recarga(d, 50);
-		 System.out.println(r.toString());
 	}
 	}
 
