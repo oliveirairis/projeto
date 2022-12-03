@@ -23,6 +23,7 @@ public class Telefonia {
 				if(this.pospagos[i] == null) {
 					PosPago posp = new PosPago(numero, cpf, nome, assinatura);
 					this.pospagos[i] = posp;
+					System.out.println("Seu cadastro foi realizado com sucesso!");
 				}
 			}
 			
@@ -32,6 +33,7 @@ public class Telefonia {
 				if (this.prepagos[i] == null) {
 					PrePago prep = new PrePago(cpf, nome, numero);
 					this.prepagos[i] = prep;
+					System.out.println("Seu cadastro foi realizado com sucesso!");
 				} 
 			}
 		}
@@ -86,13 +88,13 @@ public class Telefonia {
 	}
 	
 	public PrePago localizarPrePago(long cpf) {
-		for (int i = 0; i < numPrePagos; i++) {
+		for (int i = 0; i <= numPrePagos; i++) {
 			if (this.prepagos[i] != null) {
 				if (this.prepagos[i].getCpf() == cpf) {
 					return this.prepagos[i];
 			}
 			} else {
-				return null;
+				i++;
 			}
 		}
 		return null;
