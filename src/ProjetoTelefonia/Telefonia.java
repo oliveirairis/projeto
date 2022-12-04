@@ -143,24 +143,8 @@ public class Telefonia {
 	}
 	
 	public static void main(String[] args) {
-		Telefonia t = new Telefonia();
-		//Telefonia c = new Telefonia();
-		
-		//c.cadastrarAssinante(2, "Iris", 123, 123, 0);
-		
-		
-		//Calendar ca = Calendar.getInstance();
-		//ca.set(2022,02,18);
+		Telefonia t = new Telefonia();		
 		Date d = new Date();
-		//System.out.println(d);
-		 
-		//Calendar cu = Calendar.getInstance();
-		//cu.set(2022,12,18);
-		//Date du = cu.getTime(); 
-		//System.out.println(du);
-		//c.fazerChamada(2, 123, du, 10);
-		//c.listarAssinantes();
-		//c.imprimirFaturas(10);
 		
 		@SuppressWarnings("resource")
 		Scanner s = new Scanner(System.in);
@@ -188,9 +172,10 @@ public class Telefonia {
 				System.out.println("1 - Pós Pago");
 				System.out.println("2 - Pré Pago");
 				pp = s.nextInt();
+				s.nextLine();
 				if (pp == 1) {
 					System.out.println("Nome: ");
-					nome = s.next();
+					nome = s.nextLine();
 					System.out.println("CPF: ");
 					cpf = s.nextLong();
 					System.out.println("Número: ");
@@ -201,7 +186,7 @@ public class Telefonia {
 				} else if (pp == 2) {
 					//Listar assinantes
 					System.out.println("Nome: ");
-					nome = s.next();
+					nome = s.nextLine();
 					System.out.println("CPF: ");
 					cpf = s.nextLong();
 					System.out.println("Número: ");
